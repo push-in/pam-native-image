@@ -18,11 +18,15 @@ private final class CachedImageView: UIImageView, @unchecked Sendable {
     func update(_ values: [String: WireValue]) {
         contentMode = switch values.integer("contentMode", 1) { case 2: .scaleAspectFill; case 3: .scaleToFill; case 4: .center; default: .scaleAspectFit }
         let next = values.text("source"); guard next != source else { return }; source = next
+        let crossfade = max(0, min(1_000, values.integer("crossfadeMillis", 120)))
+        sd_imageTransition = crossfade == 0 ? nil : .fade(duration: Double(crossfade) / 1_000)
         guard let url = resolve(next) else { send(["event": .integer(2), "message": .text("Invalid image source")]); return }
         let policy = values.integer("cachePolicy", 1)
+        let cacheType: SDImageCacheType = switch policy { case 2: .memory; case 3: .disk; case 4: .none; default: .all }
         var options: SDWebImageOptions = [.retryFailed, .scaleDownLargeImages]
-        if policy == 4 { options.insert(.refreshCached) }
-        sd_setImage(with: url, placeholderImage: nil, options: options) { [weak self] image, error, _, _ in
+        if policy == 4 { options.insert(.fromLoaderOnly) }
+        let context: [SDWebImageContextOption: Any] = [.queryCacheType: cacheType.rawValue, .storeCacheType: cacheType.rawValue]
+        sd_setImage(with: url, placeholderImage: nil, options: options, context: context) { [weak self] image, error, _, _ in
             guard let self else { return }
             if let image { self.send(["event": .integer(1), "width": .integer(Int64(image.size.width)), "height": .integer(Int64(image.size.height))]) }
             else { self.send(["event": .integer(2), "message": .text(error?.localizedDescription ?? "Image load failed")]) }

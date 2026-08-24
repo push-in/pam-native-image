@@ -19,6 +19,6 @@ return NativeImage::make('https://cdn.example.com/poster.webp')
     ->crossfade(120);
 ```
 
-The decoder, resizing, cancellation, memory/disk caching, and recycled-view safety stay native through Coil 3.5 on Android and SDWebImage 5.21 on iOS. It is a horizontal primitive and never installs a feed or application template.
+The decoder, resizing, cancellation, memory/disk caching, and recycled-view safety stay native through Coil 3.3 on Android and SDWebImage 5.21 on iOS. It is a horizontal primitive and never installs a feed or application template.
 
 Sources must be HTTPS or sandbox-relative. Always provide semantic image descriptions in the surrounding PAM UI surface, test low-memory eviction and offline behavior, and run `pam production certify` before release.

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import coil3.load
 import coil3.request.CachePolicy
+import coil3.request.crossfade
 import dev.pam.nativeapp.protocol.WireMap
 import dev.pam.nativeapp.protocol.WireValue
 import dev.pam.nativeapp.views.NativeViewFactory

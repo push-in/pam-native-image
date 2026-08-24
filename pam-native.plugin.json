@@ -13,8 +13,8 @@
         "namespace": "dev.pam.pushinbr.pamnativeimage",
         "minSdk": 26,
         "dependencies": [
-            "io.coil-kt.coil3:coil:3.5.0",
-            "io.coil-kt.coil3:coil-network-okhttp:3.5.0"
+            "io.coil-kt.coil3:coil:3.3.0",
+            "io.coil-kt.coil3:coil-network-okhttp:3.3.0"
         ],
         "sourceDirs": [
             "android/src/main/kotlin"
