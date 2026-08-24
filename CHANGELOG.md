@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 0.1.4 - 2026-08-24
+
+- Pin SDWebImage to the exact reviewed `5.21.7` release so PAM Native's
+  production supply-chain audit can certify the plugin without allowing a
+  different minor version to resolve under the same descriptor.
+
 ## 0.1.3 - 2026-08-24
 
 - Bind SDWebImage progress and completion callbacks explicitly in the public
