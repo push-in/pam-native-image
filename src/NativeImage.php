@@ -9,6 +9,7 @@ use InvalidArgumentException;
 use Pam\Native\Element;
 use Pam\Native\Internal\Wire;
 use Pam\Native\Renderable;
+use Pam\Native\Style;
 use Pam\Native\UI\CustomView;
 
 final class NativeImage implements Renderable
@@ -16,6 +17,7 @@ final class NativeImage implements Renderable
     /** @var array<string, string|int|float|bool> */
     private array $properties;
     private ?Closure $handler = null;
+    private ?Style $style = null;
 
     private function __construct(string $source)
     {
@@ -28,6 +30,7 @@ final class NativeImage implements Renderable
     public function cachePolicy(ImageCachePolicy $policy): self { return $this->with('cachePolicy', $policy->value); }
     public function crossfade(int $milliseconds = 120): self { return $this->with('crossfadeMillis', max(0, min(1_000, $milliseconds))); }
     public function placeholder(string $source): self { self::assertSource($source); return $this->with('placeholder', $source); }
+    public function style(Style $style): self { $copy = clone $this; $copy->style = $style; return $copy; }
 
     /** @param Closure(ImageEventKind, array<string, string|int|float|bool>): void $handler */
     public function onEvent(Closure $handler): self { $copy = clone $this; $copy->handler = $handler; return $copy; }
@@ -35,6 +38,9 @@ final class NativeImage implements Renderable
     public function toElement(): Element
     {
         $view = CustomView::make('image.cached', $this->properties);
+        if ($this->style !== null) {
+            $view = $view->style($this->style);
+        }
         $handler = $this->handler;
         return $handler === null ? $view : $view->onNativeEvent(static function (string $payload) use ($handler): void {
             $values = Wire::decodeMap($payload);
