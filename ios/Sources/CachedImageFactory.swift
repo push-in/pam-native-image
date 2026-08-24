@@ -26,11 +26,11 @@ private final class CachedImageView: UIImageView, @unchecked Sendable {
         var options: SDWebImageOptions = [.retryFailed, .scaleDownLargeImages]
         if policy == 4 { options.insert(.fromLoaderOnly) }
         let context: [SDWebImageContextOption: Any] = [.queryCacheType: cacheType.rawValue, .storeCacheType: cacheType.rawValue]
-        sd_setImage(with: url, placeholderImage: nil, options: options, context: context) { [weak self] image, error, _, _ in
+        sd_setImage(with: url, placeholderImage: nil, options: options, context: context, progress: nil, completed: { [weak self] image, error, _, _ in
             guard let self else { return }
             if let image { self.send(["event": .integer(1), "width": .integer(Int64(image.size.width)), "height": .integer(Int64(image.size.height))]) }
             else { self.send(["event": .integer(2), "message": .text(error?.localizedDescription ?? "Image load failed")]) }
-        }
+        })
     }
     private func resolve(_ value: String) -> URL? { if value.hasPrefix("https://") { return URL(string: value) }; let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].standardizedFileURL; let target = root.appendingPathComponent(value).standardizedFileURL; return target.path.hasPrefix(root.path + "/") ? target : nil }
     private func send(_ values: [String: WireValue]) { if let data = try? WireMap.encode(values) { emit(data) } }
