@@ -28,7 +28,7 @@
         "swiftPackages": [
             {
                 "url": "https://github.com/SDWebImage/SDWebImage.git",
-                "requirement": {"kind": 2, "value": "5.21.7"},
+                "requirement": {"kind": 1, "value": "5.21.7"},
                 "products": ["SDWebImage"]
             }
         ]
