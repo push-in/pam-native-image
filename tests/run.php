@@ -14,7 +14,7 @@ $assert = static function (bool $condition, string $message) use (&$tests): void
 $image = NativeImage::make('https://cdn.example.test/poster.webp')->contentMode(ImageContentMode::Cover)->cachePolicy(ImageCachePolicy::MemoryAndDisk)->crossfade();
 $assert($image->toElement()::class === CustomView::class, 'Image must render as a native cached view.');
 $assert($image !== $image->contentMode(ImageContentMode::Center), 'Builder must remain immutable.');
-foreach (['', 'http://example.test/image.png'] as $source) {
+foreach (['', 'http://example.test/image.png', '../escape.png', '/absolute.png'] as $source) {
     try { NativeImage::make($source); throw new RuntimeException('Invalid source accepted.'); }
     catch (InvalidArgumentException) { $assert(true, 'Expected source rejection.'); }
 }

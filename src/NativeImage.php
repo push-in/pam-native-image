@@ -55,5 +55,11 @@ final class NativeImage implements Renderable
         if ($source === '' || strlen($source) > 8192 || str_contains($source, "\0") || (str_contains($source, '://') && !str_starts_with($source, 'https://'))) {
             throw new InvalidArgumentException('Image sources must be HTTPS URLs or relative sandbox paths.');
         }
+        if (!str_starts_with($source, 'https://')) {
+            $parts = preg_split('~[/\\\\]+~', $source) ?: [];
+            if (str_starts_with($source, '/') || str_starts_with($source, '\\') || array_any($parts, static fn (string $part): bool => $part === '' || $part === '.' || $part === '..')) {
+                throw new InvalidArgumentException('Image sandbox paths must be normalized and relative.');
+            }
+        }
     }
 }
