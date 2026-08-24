@@ -1,0 +1,43 @@
+{
+    "$schema": "vendor/pushinbr/pam-native/resources/pam-native.plugin.schema.json",
+    "version": 1,
+    "protocol": 1,
+    "pamNative": {
+        "minimum": "0.8.0",
+        "maximumExclusive": "0.9.0"
+    },
+    "php": {
+        "provider": "Pam\\Native\\Image\\ImagePluginProvider"
+    },
+    "android": {
+        "namespace": "dev.pam.pushinbr.pamnativeimage",
+        "minSdk": 26,
+        "dependencies": [
+            "io.coil-kt.coil3:coil:3.5.0",
+            "io.coil-kt.coil3:coil-network-okhttp:3.5.0"
+        ],
+        "sourceDirs": [
+            "android/src/main/kotlin"
+        ]
+    },
+    "ios": {
+        "minimumVersion": "15.0",
+        "sourceDirs": [
+            "ios/Sources"
+        ],
+        "swiftPackages": [
+            {
+                "url": "https://github.com/SDWebImage/SDWebImage.git",
+                "requirement": {"kind": 2, "value": "5.21.7"},
+                "products": ["SDWebImage"]
+            }
+        ]
+    },
+    "modules": [],
+    "views": [{
+        "name": "image.cached",
+        "class": "dev.pam.pushinbr.pamnativeimage.CachedImageFactory",
+        "iosClass": "CachedImageFactory"
+    }],
+    "idl": "pam-native.idl.json"
+}

@@ -1,0 +1,32 @@
+{
+    "name": "pushinbr/pam-native-image",
+    "description": "High-performance cached native image loading for PAM Native.",
+    "type": "pam-native-plugin",
+    "license": "Apache-2.0",
+    "require": {
+        "php": "^8.5",
+        "pushinbr/pam-native": "^0.8.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+        "Pam\\Native\\Image\\": "src/"
+        }
+    },
+    "extra": {
+        "pam-native": {
+            "plugin": "pam-native.plugin.json"
+        }
+    },
+    "scripts": {
+        "analyse": "phpstan analyse --level=9 --no-progress",
+        "test": "php tests/run.php",
+        "verify": ["@analyse", "@test"]
+    },
+    "config": {
+        "platform-check": true,
+        "sort-packages": true
+    }
+}

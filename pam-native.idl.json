@@ -1,0 +1,18 @@
+{
+    "$schema": "vendor/pushinbr/pam-native-plugin-kit/resources/pam-native.idl.schema.json",
+    "version": 1,
+    "namespace": "Pushinbr.PamNativeImage",
+    "enums": {
+        "OperationState": {
+            "Pending": 1,
+            "Succeeded": 2,
+            "Failed": 3
+        }
+    },
+    "records": {
+        "OperationResult": {
+            "state": "OperationState",
+            "message": "string?"
+        }
+    }
+}
