@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2 - 2026-08-24
+
+- Add immutable native layout styling.
+- Validate a clean Android API 36 launch, remote decode, cover resize and
+  non-black rendered frame in a standalone PAM consumer.
+
 ## 0.1.1 - 2026-08-24
 
 - Align Coil with PAM Native's Kotlin toolchain and certify an Android release
